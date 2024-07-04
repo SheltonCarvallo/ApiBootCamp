@@ -50,6 +50,25 @@ namespace EjemploEntity.Controllers
             }
             return respuesta;
         }
+
+
+        /*[HttpPost]
+        [Route("PostVenta")]
+
+        public async Task<RespuestaModel> PostVenta([FromBody] venta)
+        {
+            RespuestaModel respuesta = new RespuestaModel();
+            try
+            {
+                respuesta = await _venta.GetClientesByDate(date);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return respuesta;
+        }*/
     }
     
 }
