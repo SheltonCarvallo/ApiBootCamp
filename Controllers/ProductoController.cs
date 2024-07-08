@@ -1,6 +1,7 @@
 ﻿using EjemploEntity.DTOs;
 using EjemploEntity.Interfaces;
 using EjemploEntity.Models;
+using EjemploEntity.Utilitarios;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -11,6 +12,8 @@ namespace EjemploEntity.Controllers
     public class ProductoController : Controller //La clase controller es la clase que queda expuesta a la red
     {
         private readonly IProducto _producto;
+
+        private ControlError Log = new ControlError();
 
         public ProductoController(IProducto producto)
         {
@@ -26,10 +29,9 @@ namespace EjemploEntity.Controllers
             {
                 respuesta = await _producto.GetListaProductos(productoID, precio); // Metodo interno que se encuentra en el servicio
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("ProductoController", "GetListaProductos", ex.Message);
             }
 
             return respuesta;
@@ -56,21 +58,20 @@ namespace EjemploEntity.Controllers
 
         [HttpGet]
         [Route("GetProductoPrice")]
-        public async Task<List<Producto>> GetProductoPrice(float price)
+        public async Task<RespuestaModel> GetProductoPrice(float price)
         {
-            List<Producto> answer = [];
+            RespuestaModel respuesta = new RespuestaModel();
 
             try
             {
-                answer = await _producto.GetProductoPrice(price);
+                respuesta = await _producto.GetProductoPrice(price);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("ProductoController", "GetProductoPrice", ex.Message);
             }
 
-            return answer;
+            return respuesta;
         }
 
         [HttpPost]
@@ -83,10 +84,9 @@ namespace EjemploEntity.Controllers
             {
                 respuesta = await _producto.PostProducto(producto);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("ProductoController", "PostProducto", ex.Message);
             }
             return respuesta;
         }
@@ -101,10 +101,9 @@ namespace EjemploEntity.Controllers
             {
                 respuesta = await _producto.PutProducto(producto);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("ProductoController", "PutProducto", ex.Message);
             }
             return respuesta;
         }

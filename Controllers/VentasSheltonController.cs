@@ -1,5 +1,6 @@
 ﻿using EjemploEntity.Interfaces;
 using EjemploEntity.Models;
+using EjemploEntity.Utilitarios;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EjemploEntity.Controllers
@@ -9,7 +10,7 @@ namespace EjemploEntity.Controllers
     public class VentasSheltonController : Controller
     {
         private readonly IVentasShelton _ventasShelton;
-
+        private ControlError Log = new ControlError();
         public VentasSheltonController(IVentasShelton ventasShelton)
         {
             this._ventasShelton = ventasShelton;
@@ -25,10 +26,9 @@ namespace EjemploEntity.Controllers
             {
                 respuesta = await _ventasShelton.GetAnnualSales(year);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("VentasSheltonController", "GetAnnualSales", ex.Message);
             }
 
             return respuesta;

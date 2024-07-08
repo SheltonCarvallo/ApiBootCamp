@@ -1,6 +1,7 @@
 ﻿using EjemploEntity.DTOs;
 using EjemploEntity.Interfaces;
 using EjemploEntity.Models;
+using EjemploEntity.Utilitarios;
 using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
@@ -12,7 +13,10 @@ namespace EjemploEntity.Services
         /* Tenemos que hacer una inyeccion de dependencia dentro de nnuestro servicio 
          para poder inyectar la facultad de conexion de base de datos dentro de nuestro servicio para poder hacer uso de entity framework
         */
-        private readonly VentasContext _context; //Siemple se llama de la clase context
+        private readonly VentasContext _context; //SiempRe se llama de la clase context
+
+
+        private ControlError Log = new ControlError(); //Tied Couple
 
         public ProductoServices(VentasContext context)
         {
@@ -118,10 +122,12 @@ namespace EjemploEntity.Services
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                respuesta.Cod = "999";
+                respuesta.Mensaje = $"Se presento un error, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("VentaServices", "GetVentaReport", ex.Message);
             }
 
             return respuesta;
@@ -147,19 +153,22 @@ namespace EjemploEntity.Services
             return answer;
         }*/
 
-        public async Task<List<Producto>> GetProductoPrice(float price)
+        public async Task<RespuestaModel> GetProductoPrice(float price)
         {
-            List<Producto> answer = [];
+            RespuestaModel respuesta = new RespuestaModel();
+            //List<Producto> answer = [];
             try
             {
-                answer = await _context.Productos.Where(x => x.Precio == price).ToListAsync();
+                respuesta.Data = await _context.Productos.Where(x => x.Precio == price).ToListAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                respuesta.Cod = "999";
+                respuesta.Mensaje = $"Se presento un error, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("VentaServices", "GetVentaReport", ex.Message);
             }
-            return answer;
+            return respuesta;
         }
 
         public async Task<RespuestaModel> PostProducto(Producto producto)
@@ -181,7 +190,8 @@ namespace EjemploEntity.Services
             {
 
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se presento un error: {ex.Message}";
+                respuesta.Mensaje = $"Se presento un error, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("VentaServices", "GetVentaReport", ex.Message);
             }
             return respuesta;
         }
@@ -211,7 +221,8 @@ namespace EjemploEntity.Services
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se presento un error: {ex.Message}";
+                respuesta.Mensaje = $"Se presento un error, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("VentaServices", "GetVentaReport", ex.Message);
             }
             return respuesta;
         }

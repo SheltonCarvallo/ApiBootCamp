@@ -1,5 +1,6 @@
 ﻿using EjemploEntity.Interfaces;
 using EjemploEntity.Models;
+using EjemploEntity.Utilitarios;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata.Ecma335;
 
@@ -8,6 +9,8 @@ namespace EjemploEntity.Services
     public class CatalogoServices : ICatalogo
     {
         private readonly VentasContext _context;
+
+        private ControlError Log = new ControlError();
 
         public CatalogoServices(VentasContext context)
         {
@@ -25,10 +28,9 @@ namespace EjemploEntity.Services
             }
             catch (Exception ex)
             {
-
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Me a presentado una novedad {ex.Message}";
-
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("CatalogoServices", "GetCategoria", ex.Message);
             }
             return respuesta;
         }
@@ -45,10 +47,9 @@ namespace EjemploEntity.Services
             }
             catch (Exception ex)
             {
-
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Me a presentado una novedad {ex.Message}";
-
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("CatalogoServices", "GetMarca", ex.Message);
             }
             return respuesta;
         }
@@ -65,10 +66,9 @@ namespace EjemploEntity.Services
             }
             catch (Exception ex)
             {
-
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Me a presentado una novedad {ex.Message}";
-
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("CatalogoServices", "GetSucursal", ex.Message);
             }
             return respuesta;
         }
@@ -103,9 +103,9 @@ namespace EjemploEntity.Services
             }
             catch (Exception ex)
             {
-
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Me a presentado una novedad {ex.Message}";
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("CatalogoServices", "PostCategoria", ex.Message);
             }
             return respuesta;
         }
@@ -140,9 +140,9 @@ namespace EjemploEntity.Services
             }
             catch (Exception ex)
             {
-
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Me a presentado una novedad {ex.Message}";
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("CatalogoServices", "PostMarca", ex.Message);
             }
             return respuesta;
         }
@@ -176,9 +176,9 @@ namespace EjemploEntity.Services
             }
             catch (Exception ex)
             {
-
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Me a presentado una novedad {ex.Message}";
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("CatalogoServices", "PostSucursal", ex.Message);
             }
             return respuesta;
         }
@@ -206,9 +206,9 @@ namespace EjemploEntity.Services
             }
             catch (Exception ex)
             {
-
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se presento un error: {ex.Message}";
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("CatalogoServices", "PutCategoria", ex.Message);
             }
 
             return respuesta;
@@ -237,9 +237,9 @@ namespace EjemploEntity.Services
             }
             catch (Exception ex)
             {
-
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se presento un error: {ex.Message}";
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("CatalogoServices", "PutMarca", ex.Message);
             }
 
             return respuesta;
@@ -268,10 +268,9 @@ namespace EjemploEntity.Services
             }
             catch (Exception ex)
             {
-
-
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se presento un error: {ex.Message}";
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("CatalogoServices", "PutSucursal", ex.Message);
             }
 
             return respuesta;

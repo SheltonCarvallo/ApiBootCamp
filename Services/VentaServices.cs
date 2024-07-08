@@ -1,13 +1,17 @@
 ﻿using EjemploEntity.DTOs;
 using EjemploEntity.Interfaces;
 using EjemploEntity.Models;
+using EjemploEntity.Utilitarios;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.ConstrainedExecution;
 
 namespace EjemploEntity.Services
 {
     public class VentaServices : IVenta
     {
         private readonly VentasContext _context;
+
+        private ControlError Log = new ControlError();
 
         public VentaServices(VentasContext context)
         {
@@ -95,7 +99,7 @@ namespace EjemploEntity.Services
                     respuesta.Data = await query.ToArrayAsync();
                     respuesta.Mensaje = "OK";
                 }
-                else if (estado != null)
+                /*else if (estado != null)
                 {
                     //query = query.Where(x => x.Estado.Equals(estado)); //method syntax, encadenando consultas
 
@@ -106,7 +110,7 @@ namespace EjemploEntity.Services
                     respuesta.Cod = "000";
                     respuesta.Data = await query.ToArrayAsync();
                     respuesta.Mensaje = "OK";
-                }
+                }*/
                 else if (sucursal != null)
                 {
                     //query = query.Where(x => x.SucursalDetalle.Equals(sucursal)); //method syntax, encadenando consultas
@@ -122,14 +126,15 @@ namespace EjemploEntity.Services
                 else
                 {
                     respuesta.Cod = "999";
-                    respuesta.Mensaje = "Datos nos esxistentes";
+                    respuesta.Mensaje = "Parametros ingresadoa de forma incorrecta";
                 }
             }
             catch (Exception ex)
             {
 
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se presento un error: {ex.Message}";
+                respuesta.Mensaje = $"Se presento un error, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("VentaServices", "GetVenta", ex.Message);
             }
             return respuesta;
         }
@@ -172,7 +177,8 @@ namespace EjemploEntity.Services
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se presento un error: {ex.Message}";
+                respuesta.Mensaje = $"Se presento un error, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("VentaServices", "GetClientesByDate", ex.Message);
             }
 
             return respuesta;
@@ -202,9 +208,116 @@ namespace EjemploEntity.Services
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se presento un error: {ex.Message}";
+                respuesta.Mensaje = $"Se presento un error, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("VentaServices","PostVenta", ex.Message);
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaModel> PutVenta(Venta venta)
+        {
+            RespuestaModel respuesta = new RespuestaModel();
+            try
+            {
+                _context.Ventas.Update(venta);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                respuesta.Cod = "999";
+                respuesta.Mensaje = $"Se presento un error, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("VentaServices", "PutVenta", ex.Message);
+            }
+            return respuesta;
+
+        }
+
+        public async Task<RespuestaModel> GetVentaReport(double precio)
+        {
+            RespuestaModel respuesta = new RespuestaModel();
+            try
+            {
+                respuesta.Cod = "000";
+
+                IQueryable<ConsultaPrecioDTO> query = from ven in _context.Ventas  // Query Syntax
+                                                      where ven.Precio >= precio
+                                                      group ven by ven.Precio into newGroup
+                                                      select new ConsultaPrecioDTO
+                                                      {
+                                                          Precio = newGroup.Key,
+                                                          CantidadRegistros = newGroup.Count()
+
+                                                      };
+
+                respuesta.Data = await query.ToListAsync();
+                respuesta.Mensaje = "Ok";
+
+                /*var query = from ven in _context.Ventas   // Query Syntax Usando Artificio de programación
+                            where ven.Precio >= precio
+                            group ven by ven.Precio into newGroup
+                            orderby newGroup.Key
+                            select new
+                            {
+                                Precio = newGroup.Key,
+                                CantidadRegistros = newGroup.Count()
+                            };*/
+
+
+
+                /*respuesta.Data = await _context.Ventas.Where(x => x.Precio >= precio). // Method Syntax
+                    GroupBy(y => y.Precio).
+                    Select(newG => new 
+                    { 
+                        precio = newG.Key, Freq = newG.Count() 
+                    }).ToListAsync();*/
+            }
+            catch (Exception ex)
+            {
+
+                respuesta.Cod = "999";
+                respuesta.Mensaje = $"Se presento un error, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("VentaServices", "GetVentaReport", ex.Message);
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaModel> GetCleintesReport()
+        {
+            RespuestaModel respuesta = new RespuestaModel();
+
+            try
+            {
+                IQueryable<ClienteConsultasDTO> query = from v in _context.Ventas
+                                                        join cl in _context.Clientes on v.ClienteId equals cl.ClienteId
+                                                        select new ClienteConsultasDTO
+                                                        {
+                                                            NombreCliente = cl.ClienteNombre,
+                                                            TotalGasto = v.Precio
+                                                        };
+
+                respuesta.Cod = "000";
+
+                respuesta.Data = await (from v in query
+                                        group v by v.NombreCliente into newGroup
+                                        orderby newGroup.Sum(x => x.TotalGasto)
+                                        select new ClienteConsultasDTO
+                                        {
+                                            NombreCliente = newGroup.Key,
+                                            TotalGasto = newGroup.Sum(x => x.TotalGasto)
+
+                                        }).ToListAsync();
+
+            }
+            catch (Exception ex)
+            {
+
+                respuesta.Cod = "999";
+                respuesta.Mensaje = $"Se presento un error, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("VentaServices", "GetVentaReport", ex.Message);
             }
             return respuesta;
         }
     }
+
+
 }

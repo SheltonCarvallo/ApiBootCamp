@@ -1,6 +1,7 @@
 ﻿using EjemploEntity.DTOs;
 using EjemploEntity.Interfaces;
 using EjemploEntity.Models;
+using EjemploEntity.Utilitarios;
 using Microsoft.EntityFrameworkCore;
 
 namespace EjemploEntity.Services
@@ -8,7 +9,7 @@ namespace EjemploEntity.Services
     public class VentasSheltonServices : IVentasShelton
     {
         private readonly VentasContext _context;
-
+        private ControlError Log = new ControlError();
         public VentasSheltonServices(VentasContext context)
         {
             this._context = context;
@@ -39,10 +40,11 @@ namespace EjemploEntity.Services
                 respuesta.Mensaje = "Ok";
                */
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                respuesta.Cod = "999";
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("VentasSheltonServices", "GetAnnualSales", ex.Message);
             }
             return respuesta;
         }
