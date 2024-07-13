@@ -127,5 +127,23 @@ namespace EjemploEntity.Controllers
             return respuesta;
 
         }
+
+        [HttpDelete]
+        [Route("DeleteVenta")]
+        public async Task<RespuestaModel> DeleteVenta(double idFactura)
+        {
+            RespuestaModel respuesta = new RespuestaModel();
+            try
+            {
+                respuesta = await _venta.DeleteVenta(idFactura);
+            }
+            catch (Exception ex)
+            {
+
+                Log.LogErrorMetodos("VentaController", "DeleteVenta", ex.Message);
+            }
+            return respuesta;
+
+        }
     }
 }

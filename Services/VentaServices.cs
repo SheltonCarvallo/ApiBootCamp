@@ -194,7 +194,7 @@ namespace EjemploEntity.Services
 
                 if (!existeFacturaId)
                 {
-                    double newFacturaId = _context.Ventas.OrderBy(x => x.IdFactura).Select(x => x.IdFactura).FirstOrDefault() + 1;
+                    double newFacturaId = _context.Ventas.OrderByDescending(x => x.IdFactura).Select(x => x.IdFactura).FirstOrDefault() + 1;
                     venta.IdFactura = newFacturaId;
                     venta.FechaHora = DateTime.Now;
 
@@ -317,7 +317,40 @@ namespace EjemploEntity.Services
             }
             return respuesta;
         }
+
+        public async Task<RespuestaModel> DeleteVenta(double idFactura)
+        {
+            RespuestaModel respuesta = new RespuestaModel();
+
+            try
+            {
+                Venta? ventaToDelete = await _context.Ventas.FirstOrDefaultAsync(x => x.IdFactura == idFactura);
+
+                if (ventaToDelete is not null)
+                {
+                    ventaToDelete.Estado = 2;
+
+                    _context.Ventas.Update(ventaToDelete);
+                    await _context.SaveChangesAsync();
+
+                    respuesta.Cod = "000";
+                    respuesta.Data = ventaToDelete;
+                    respuesta.Mensaje = "OK";
+                }
+                else
+                {
+                    respuesta.Cod = "999";
+                    respuesta.Mensaje = "No existe una venta registrada con el ID ingresado, no se puede realizar cambios";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Log.LogErrorMetodos("ClienteServices", "DeleteVenta", ex.Message);
+            }
+
+            return respuesta;
+        }
     }
-
-
 }
+

@@ -16,5 +16,7 @@ namespace EjemploEntity.Interfaces
         Task<RespuestaModel> PostProducto(Producto producto);
 
         Task<RespuestaModel> PutProducto(Producto producto);
+
+        Task<RespuestaModel> DeleteProducto(double id);
     }
 }

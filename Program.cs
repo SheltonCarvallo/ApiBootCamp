@@ -20,6 +20,7 @@ namespace EjemploEntity
             builder.Services.AddScoped<ICliente, ClienteServices>();
             builder.Services.AddScoped<IVentasShelton, VentasSheltonServices>();
             builder.Services.AddScoped<IVenta, VentaServices>();
+            builder.Services.AddScoped<IVendedor, VendedorServices>();
 
             builder.Services.AddDbContext<VentasContext>(opciones =>
             opciones.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); 

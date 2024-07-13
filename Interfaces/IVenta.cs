@@ -15,5 +15,7 @@ namespace EjemploEntity.Interfaces
         Task<RespuestaModel> GetVentaReport(double precio);
 
         Task<RespuestaModel> GetCleintesReport();
+
+        Task<RespuestaModel> DeleteVenta(double idFactura);
     }
 }

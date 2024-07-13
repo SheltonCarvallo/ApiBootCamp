@@ -142,6 +142,41 @@ namespace EjemploEntity.Services
 
             return respuesta;
         }
+
+        public async Task<RespuestaModel> DeleteCliente(double id)
+        {
+            RespuestaModel respuesta = new RespuestaModel();
+           
+            try
+            {
+                Cliente? clienteToDelete = await _context.Clientes.FirstOrDefaultAsync(x => x.ClienteId == id);
+
+                if (clienteToDelete is not null)
+                {
+                    clienteToDelete.Estado = "I";
+
+                    _context.Clientes.Update(clienteToDelete);
+                    await _context.SaveChangesAsync();
+
+                    respuesta.Cod = "000";
+                    respuesta.Data = clienteToDelete;
+                    respuesta.Mensaje = "OK";
+                }
+                else
+                {
+                    respuesta.Cod = "999";
+                    respuesta.Mensaje = "No existe un cliente registrado con el ID ingresado, no se puede realizar cambios";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Log.LogErrorMetodos("ClienteServices", "DeleteCliente", ex.Message);
+            }
+
+            return respuesta;
+        }
     }
 }
+
 

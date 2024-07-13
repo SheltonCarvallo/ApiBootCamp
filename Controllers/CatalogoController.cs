@@ -17,6 +17,8 @@ namespace EjemploEntity.Controllers
             this._catalogo = catalogo;
         }
 
+        //GETS
+
         [HttpGet]
         [Route("GetCategoria")]
         public async Task<RespuestaModel> GetCategoria()
@@ -52,6 +54,23 @@ namespace EjemploEntity.Controllers
         }
 
         [HttpGet]
+        [Route("GetModelo")]
+        public async Task<RespuestaModel> GetModelo()
+        {
+            var respuesta = new RespuestaModel();
+            try
+            {
+                respuesta = await _catalogo.GetModelo();
+            }
+            catch (Exception ex)
+            {
+
+                Log.LogErrorMetodos("CatalogoController", "GetModelo", ex.Message);
+            }
+            return respuesta;
+        }
+
+        [HttpGet]
         [Route("GetSucursal")]
         public async Task<RespuestaModel> GetSucursal()
         {
@@ -68,9 +87,28 @@ namespace EjemploEntity.Controllers
             return respuesta;
         }
 
+        [HttpGet]
+        [Route("GetCiudad")]
+        public async Task<RespuestaModel> GetCiudad()
+        {
+            var respuesta = new RespuestaModel();
+            try
+            {
+                respuesta = await _catalogo.GetCiudad();
+            }
+            catch (Exception ex)
+            {
+
+                Log.LogErrorMetodos("CatalogoController", "GetCiudad", ex.Message);
+            }
+            return respuesta;
+        }
+
+        //POSTS
+
         [HttpPost]
         [Route("PostCategoria")]
-        public async Task<RespuestaModel> PostCategoria(Categorium categoria)
+        public async Task<RespuestaModel> PostCategoria([FromBody] Categorium categoria)
         {
             var respuesta = new RespuestaModel();
             try
@@ -87,7 +125,7 @@ namespace EjemploEntity.Controllers
 
         [HttpPost]
         [Route("PostMarca")]
-        public async Task<RespuestaModel> PostMarca(Marca marca)
+        public async Task<RespuestaModel> PostMarca([FromBody] Marca marca)
         {
             var respuesta = new RespuestaModel();
             try
@@ -104,7 +142,7 @@ namespace EjemploEntity.Controllers
 
         [HttpPost]
         [Route("PostSucursal")]
-        public async Task<RespuestaModel> PostSucursal(Sucursal sucursal)
+        public async Task<RespuestaModel> PostSucursal([FromBody] Sucursal sucursal)
         {
             var respuesta = new RespuestaModel();
             try
@@ -120,9 +158,46 @@ namespace EjemploEntity.Controllers
         }
 
 
+        [HttpPost]
+        [Route("PostModelo")]
+        public async Task<RespuestaModel> PostModelo([FromBody] Modelo modelo)
+        {
+            var respuesta = new RespuestaModel();
+            try
+            {
+                respuesta = await _catalogo.PostModelo(modelo);
+            }
+            catch (Exception ex)
+            {
+
+                Log.LogErrorMetodos("CatalogoController", "PostModelo", ex.Message);
+            }
+            return respuesta;
+        }
+
+        [HttpPost]
+        [Route("PostCiudad")]
+        public async Task<RespuestaModel> PostCiudad([FromBody] Ciudad ciudad)
+        {
+            var respuesta = new RespuestaModel();
+            try
+            {
+                respuesta = await _catalogo.PostCiudad(ciudad);
+            }
+            catch (Exception ex)
+            {
+
+                Log.LogErrorMetodos("CatalogoController", "PostCiudad", ex.Message);
+            }
+            return respuesta;
+        }
+
+
+        //PUTS
+
         [HttpPut]
         [Route("PutCategoria")]
-        public async Task<RespuestaModel> PutCategoria(Categorium categoria)
+        public async Task<RespuestaModel> PutCategoria([FromBody] Categorium categoria)
         {
             RespuestaModel respuesta = new RespuestaModel();
 
@@ -140,7 +215,7 @@ namespace EjemploEntity.Controllers
 
         [HttpPut]
         [Route("PutMarca")]
-        public async Task<RespuestaModel> PutMarca(Marca marca)
+        public async Task<RespuestaModel> PutMarca([FromBody] Marca marca)
         {
             RespuestaModel respuesta = new RespuestaModel();
 
@@ -158,7 +233,7 @@ namespace EjemploEntity.Controllers
 
         [HttpPut]
         [Route("PutSucursal")]
-        public async Task<RespuestaModel> PutSucursal(Sucursal sucursal)
+        public async Task<RespuestaModel> PutSucursal([FromBody] Sucursal sucursal)
         {
             RespuestaModel respuesta = new RespuestaModel();
 
@@ -170,6 +245,42 @@ namespace EjemploEntity.Controllers
             {
 
                 Log.LogErrorMetodos("CatalogoController", "PutSucursal", ex.Message);
+            }
+            return respuesta;
+        }
+
+        [HttpPut]
+        [Route("PutModelo")]
+        public async Task<RespuestaModel> PutModelo([FromBody] Modelo modelo)
+        {
+            RespuestaModel respuesta = new RespuestaModel();
+
+            try
+            {
+                respuesta = await _catalogo.PutModelo(modelo);
+            }
+            catch (Exception ex)
+            {
+
+                Log.LogErrorMetodos("CatalogoController", "PutModelo", ex.Message);
+            }
+            return respuesta;
+        }
+
+        [HttpPut]
+        [Route("PutCiudad")]
+        public async Task<RespuestaModel> PutCiudad([FromBody] Ciudad ciudad)
+        {
+            RespuestaModel respuesta = new RespuestaModel();
+
+            try
+            {
+                respuesta = await _catalogo.PutCiudad(ciudad);
+            }
+            catch (Exception ex)
+            {
+
+                Log.LogErrorMetodos("CatalogoController", "PutCiudad", ex.Message);
             }
             return respuesta;
         }

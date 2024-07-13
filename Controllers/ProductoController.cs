@@ -107,6 +107,23 @@ namespace EjemploEntity.Controllers
             }
             return respuesta;
         }
+
+        [HttpDelete]
+        [Route("DeleteProducto")]
+
+        public async Task<RespuestaModel> DeleteProducto(double id)
+        {
+            RespuestaModel respuesta = new RespuestaModel();
+            try
+            {
+                respuesta = await _producto.DeleteProducto(id);
+            }
+            catch (Exception ex)
+            {
+                Log.LogErrorMetodos("ProductoController", "DeleteProducto", ex.Message);
+            }
+            return respuesta;
+        }
     }
 }
 
