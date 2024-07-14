@@ -21,7 +21,8 @@ namespace EjemploEntity.Services
             RespuestaModel respuesta = new RespuestaModel();
             try
             {
-               /* respuesta.Cod = "000";
+            /*
+                respuesta.Cod = "000";
                 respuesta.Data = await (from v in _context.Ventas
                                         join p in _context.Productos on v.ProductoId equals p.ProductoId
                                         join m in _context.Marcas on v.MarcaId equals m.MarcaId

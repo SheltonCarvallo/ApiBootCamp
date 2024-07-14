@@ -130,3 +130,4 @@ C:\Users\TufGaming\OneDrive - Universidad Politecnica Salesiana\Shelton\Bootcamp
 C:\Users\TufGaming\OneDrive - Universidad Politecnica Salesiana\Shelton\Bootcamp\EjemploEntity\EjemploEntity\obj\Debug\net8.0\EjemploEntity.pdb
 C:\Users\TufGaming\OneDrive - Universidad Politecnica Salesiana\Shelton\Bootcamp\EjemploEntity\EjemploEntity\obj\Debug\net8.0\EjemploEntity.genruntimeconfig.cache
 C:\Users\TufGaming\OneDrive - Universidad Politecnica Salesiana\Shelton\Bootcamp\EjemploEntity\EjemploEntity\obj\Debug\net8.0\ref\EjemploEntity.dll
+C:\Users\TufGaming\OneDrive - Universidad Politecnica Salesiana\Shelton\Bootcamp\EjemploEntity\EjemploEntity\bin\Debug\net8.0\Newtonsoft.Json.dll

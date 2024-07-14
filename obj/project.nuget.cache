@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "99k0fueHcTh3Tf1MhHRnwu3TCWLt1bVFAq3bW6iU4hTSOhPjqYJDFZPX6XXVNgbSBeH1n2HrJNowDYxKoePRtA==",
+  "dgSpecHash": "qs5Nq5FYX3l+Het05ZMNCt/aNlO5ZXMDY1GQRSmfjSqwOsOgATaCUsYipoIjXHEvH1SQlMDjH8N/Uqr3mYkn2Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\TufGaming\\OneDrive - Universidad Politecnica Salesiana\\Shelton\\Bootcamp\\EjemploEntity\\EjemploEntity\\EjemploEntity.csproj",
   "expectedPackageFiles": [
@@ -46,6 +46,7 @@
     "C:\\Users\\TufGaming\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "C:\\Users\\TufGaming\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\TufGaming\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\TufGaming\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\TufGaming\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",
     "C:\\Users\\TufGaming\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
     "C:\\Users\\TufGaming\\.nuget\\packages\\system.composition\\6.0.0\\system.composition.6.0.0.nupkg.sha512",

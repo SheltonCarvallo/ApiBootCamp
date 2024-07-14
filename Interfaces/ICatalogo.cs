@@ -25,7 +25,7 @@ namespace EjemploEntity.Interfaces
         Task<RespuestaModel> PutCiudad(Ciudad ciudad);
 
 
-
+        // Delete methods 
 
 
     }
